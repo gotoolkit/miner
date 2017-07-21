@@ -1,0 +1,9 @@
+cmd="$@"
+
+until miner -h; do
+  >&2 echo "miner is unavailable - sleeping"
+  sleep 1
+done
+
+>&2 echo "miner is up - executing command"
+exec $cmd
