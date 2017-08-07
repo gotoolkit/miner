@@ -15,30 +15,46 @@ package cmd
 
 import (
 	"os"
+	"os/signal"
 	"strconv"
 
 	"github.com/gotoolkit/miner/container"
+	"github.com/gotoolkit/miner/db"
 	"github.com/spf13/cobra"
 )
 
-const DockerAPIMinVersion string = "1.24"
+const DockerAPIMinVersion string = "1.26"
 
 // serverCmd represents the server command
 var serverCmd = &cobra.Command{
 	Use:   "server",
 	Short: "A brief description of your command",
 	Run: func(cmd *cobra.Command, args []string) {
+		if botToken == "" {
+			cmd.Usage()
+			os.Exit(1)
+		}
+
+		db.Init()
+		defer db.Close()
+
 		os.Setenv("DOCKER_HOST", dockerHost)
 		os.Setenv("DOCKER_TLS_VERIFY", strconv.FormatBool(tlsverify))
 		os.Setenv("DOCKER_API_VERSION", DockerAPIMinVersion)
 
-		container.NewClient()
+		client := container.NewClient(botToken)
+		go client.StartWebHook()
+		go client.StartBot(userID)
+
+		handleSignals()
 	},
 }
 
 var (
 	dockerHost string
 	tlsverify  bool
+	botToken   string
+	userID     int
 )
 
 func init() {
@@ -53,5 +69,15 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// serverCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	serverCmd.Flags().IntVarP(&userID, "id", "I", 1, "Telegram author user")
+	serverCmd.Flags().StringVarP(&botToken, "token", "T", "", "Telegram Bot Token")
 	serverCmd.Flags().StringVarP(&dockerHost, "host", "H", "unix:///var/run/docker.sock", "Docker host to connect to")
+
+}
+
+func handleSignals() {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt, os.Kill)
+	<-c
 }
