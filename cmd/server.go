@@ -45,7 +45,7 @@ var serverCmd = &cobra.Command{
 		client := container.NewClient(botToken)
 		go client.StartWebHook()
 		go client.StartBot(userID)
-
+		// go client.StartInlineQuery()
 		handleSignals()
 	},
 }
