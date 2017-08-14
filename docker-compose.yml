@@ -1,19 +1,20 @@
 version: "3"
 services:
-  builder:
-    image: golang:alpine
-    volumes: 
-      - ./:/go/src/github.com/gotoolkit/miner
-      - ./dist:/go/bin
-    working_dir: /go/src/github.com/gotoolkit/miner
-    command: go install
+  # builder:
+  #   image: golang:alpine
+  #   volumes: 
+  #     - ./:/go/src/github.com/gotoolkit/miner
+  #     - ./dist:/go/bin
+  #   working_dir: /go/src/github.com/gotoolkit/miner
+  #   command: go install
 
   app:
-    image: alpine
-    depends_on: 
-      - builder
-    volumes: 
-      - ./dist:/usr/local/bin
+    image: containerize/miner
+    # image: alpine
+    # depends_on: 
+      # - builder
+    # volumes: 
+      # - ./dist:/usr/local/bin
       - /var/run/docker.sock:/var/run/docker.sock
     command: sh -c "wait-for miner server"
     tty: true
