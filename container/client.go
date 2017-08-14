@@ -150,7 +150,7 @@ func (c *client) StartBot(authorID int) {
 			}
 			edit := tgbotapi.EditMessageTextConfig{
 				BaseEdit: tgbotapi.BaseEdit{
-					ChatID:      update.CallbackQuery.Message.Chat.ID,
+					ChatID:      int64(update.CallbackQuery.From.ID),
 					MessageID:   update.CallbackQuery.Message.MessageID,
 					ReplyMarkup: &markup,
 				},
@@ -177,7 +177,7 @@ func (c *client) StartBot(authorID int) {
 
 		// bot.Send(msg)
 		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
+		msg := tgbotapi.NewMessage(int64(update.Message.From.ID), update.Message.Text+"\n Group: https://t.me/dockertutorial"+"\n Author: @paultian")
 		msg.ReplyMarkup = markup
 
 		bot.Send(msg)
