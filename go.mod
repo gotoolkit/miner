@@ -1,0 +1,29 @@
+module github.com/gotoolkit/miner
+
+require (
+	github.com/Microsoft/go-winio v0.4.4
+	github.com/Sirupsen/logrus v0.0.0-20170713114250-a3f95b5c4235
+	github.com/boltdb/bolt v1.3.1
+	github.com/docker/distribution v2.6.2+incompatible
+	github.com/docker/docker v1.13.1
+	github.com/docker/go-connections v0.2.1
+	github.com/docker/go-units v0.3.1
+	github.com/fsnotify/fsnotify v1.4.2
+	github.com/inconshreveable/mousetrap v1.0.0
+	github.com/mitchellh/go-homedir v0.0.0-20161203194507-b8bc1bf76747
+	github.com/mitchellh/mapstructure v0.0.0-20170523030023-d0303fe80992
+	github.com/opencontainers/runc v0.1.1
+	github.com/pelletier/go-buffruneio v0.2.0
+	github.com/pkg/errors v0.8.0
+	github.com/spf13/afero v0.0.0-20170217164146-9be650865eab
+	github.com/spf13/cast v1.1.0
+	github.com/spf13/cobra v0.0.0-20170731170427-b26b538f6930
+	github.com/spf13/pflag v1.0.0
+	github.com/spf13/viper v1.0.0
+	github.com/technoweenie/multipartstreamer v1.0.1
+	golang.org/x/net v0.0.0-20170808061010-090ebbdfc2af
+	golang.org/x/sys v0.0.0-20170803140359-d8f5ea21b929
+	golang.org/x/text v0.0.0-20170730040918-3bd178b88a81
+	gopkg.in/telegram-bot-api.v4 v4.0.0-20161125055035-0a57807db79e
+	gopkg.in/yaml.v2 v2.0.0-20170721122051-25c4ec802a7d
+)
